@@ -8,9 +8,11 @@ public class BallBehaviour : MonoBehaviour
     public Transform t;
     public int i;
 
+    private Vector3 InitialPosition;
+
     void Start()
     {
-
+        InitialPosition = new Vector3(-2.029f, 2.21f, 0.078f);
         i = 0;
         Debug.Log("Hello " + i);
     }
@@ -19,5 +21,10 @@ public class BallBehaviour : MonoBehaviour
     void Update()
     {
         Debug.Log("Hello " + i + " " + t.position.y);
+    }
+
+    void ResetBall()
+    {
+
     }
 }
