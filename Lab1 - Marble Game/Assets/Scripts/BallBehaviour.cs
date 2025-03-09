@@ -1,30 +1,54 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BallBehaviour : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public Transform t;
-    public int i;
+    public Collider BottomTrigger;
+
+    public Collider LeftTen;
+    public Collider LeftTwenty;
+    public Collider Thirty;
+    public Collider RightTwenty;
+    public Collider RightTen;
+
+    public float MinZPosition = -0.46f;
+    public float MaxZPosition = 0.49f;
 
     private Vector3 InitialPosition;
+    private Rigidbody rb;
+    private bool isResetingBall = false;
 
+    // Start is called before the first frame update
     void Start()
     {
         InitialPosition = new Vector3(-2.029f, 2.21f, 0.078f);
-        i = 0;
-        Debug.Log("Hello " + i);
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hello " + i + " " + t.position.y);
+        if (other == BottomTrigger && !isResetingBall)
+        {
+            StartCoroutine(ResetBall());
+        }
     }
 
-    void ResetBall()
+    private IEnumerator ResetBall()
     {
+        isResetingBall = true;
+        yield return new WaitForSeconds(1f);
 
+        this.enabled = false;
+        rb.isKinematic = true;
+
+        var newPosition = InitialPosition;
+
+        newPosition.z = Random.Range(MinZPosition, MaxZPosition);
+
+        transform.position = newPosition;
+
+        this.enabled = true;
+        rb.isKinematic = false;
+        isResetingBall = false;
     }
 }
