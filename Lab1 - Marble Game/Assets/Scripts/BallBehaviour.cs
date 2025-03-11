@@ -1,15 +1,18 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class BallBehaviour : MonoBehaviour
 {
     public Collider BottomTrigger;
 
+    public TMP_Text Points;
     public Collider LeftTen;
     public Collider LeftTwenty;
     public Collider Thirty;
     public Collider RightTwenty;
     public Collider RightTen;
+    public int points = 0;
 
     public float MinZPosition = -0.46f;
     public float MaxZPosition = 0.49f;
@@ -30,6 +33,24 @@ public class BallBehaviour : MonoBehaviour
         if (other == BottomTrigger && !isResetingBall)
         {
             StartCoroutine(ResetBall());
+        }
+
+        if(other == LeftTen || other == RightTen)
+        {
+            points += 10;
+            Points.text = points.ToString();
+        }
+
+        if(other == LeftTwenty || other == RightTwenty)
+        {
+            points += 20;
+            Points.text = points.ToString();
+        }
+
+        if(other == Thirty)
+        {
+            points += 30;
+            Points.text = points.ToString();
         }
     }
 
